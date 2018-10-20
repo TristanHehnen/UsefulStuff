@@ -9,6 +9,14 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 
+# Print versions of used packages.
+print('Package Versions')
+print('----------------')
+print('Pandas version: {}'.format(pd.__version__))
+print('Numpy version: {}'.format(np.__version__))
+print('Matplotlib version: {}'.format(matplotlib.__version__))
+
+
 def plot_exp_mod_sim(data_set, title, x_label, y_label,
                      data_x_label=None, data_y_label=None,
                      exp_df=None, model_dfs=None,
