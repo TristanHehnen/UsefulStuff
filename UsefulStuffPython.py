@@ -93,3 +93,15 @@ def plot_exp_mod_sim(data_set, title, x_label, y_label,
 
     if plot_file_name is not None:
         plt.savefig(plot_file_name + '.png')
+
+
+def normaliser(x, xmin, xmax):
+    """
+    :param x: Value to be normalised between the provided limits.
+    :param xmin: Lower limit.
+    :param xmax: Upper limit.
+    :return: Normalised value.
+    """
+
+    normal = (x-xmin)/(xmax-xmin)
+    return normal
