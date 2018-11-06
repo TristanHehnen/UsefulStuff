@@ -2,6 +2,9 @@ import os
 import subprocess
 import sys
 
+# Build gif from single images with ffmpeg.
+# ffmpeg -i filename_%04d.png output.gif
+
 import pandas as pd
 import numpy as np
 # import seaborn as sns
@@ -97,11 +100,28 @@ def plot_exp_mod_sim(data_set, title, x_label, y_label,
 
 def normaliser(x, xmin, xmax):
     """
+    Normalises a parameters "location" within a given range. Lower range
+    limit is set to 0, upper range limit is set to 1.
+
     :param x: Value to be normalised between the provided limits.
     :param xmin: Lower limit.
     :param xmax: Upper limit.
     :return: Normalised value.
     """
 
-    normal = (x-xmin)/(xmax-xmin)
-    return normal
+    normalised_value = (x-xmin)/(xmax-xmin)
+    return normalised_value
+
+
+def reverser(normal_value, xmin, xmax):
+    """
+    Maps normalised values back to the desired range.
+
+    :param normal_value: Normalised value to be mapped onto the provided range.
+    :param xmin: Lower limit.
+    :param xmax: Upper limit.
+    :return: Reversed value.
+    """
+
+    reversed_value = normal_value * (xmax - xmin) + xmin
+    return reversed_value
