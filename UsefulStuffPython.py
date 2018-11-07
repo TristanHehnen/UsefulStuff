@@ -125,3 +125,77 @@ def reverser(normal_value, xmin, xmax):
 
     reversed_value = normal_value * (xmax - xmin) + xmin
     return reversed_value
+
+
+def adjust_range(ranges_dict, new_ranges, percent=True):
+    """
+    This function aims to adjust sampling ranges as used during the inverse
+    modelling process with PROPTI/SPOTPY. Input is a dictionary, where the
+    keys are the parameter labels and the values are a list containing the
+    lower and the upper limit of the sampling range (`ranges_dict`).
+    New limits are to be provided as list of lists (`new_ranges`). Each
+    nested list contains a string matching a key of `ranges_dict` and a new
+    value. Positive values are assumed to increase the upper, negative values
+    the lower limit. The `percent` flag determines if the provided values are
+    to adjust the range as percentages of the sampling range (`True`) or if the
+    respective values are to be taken as provided (False).
+    New limits are appended to the existing list, leading to:
+    [original min, original max, new min, new max].
+    For parameters that are not to be changed the original limits will
+    simply be copied.
+
+    :param ranges_dict: Dictionary with the parameter label as key and a list
+        of upper, lower limits.
+    :param new_ranges: List of lists, containig parameter label as string and
+        new value, possibly as percentage (see the flag).
+    :param percent: If `True`, values in `new_ranges` need to be between 0
+        and 1. If `False`, values are taken as provided.
+    :return: Nothing - the dictionary is adjusted in place (list append).
+    
+    """
+    # Extract all the keys of the dictionary and
+    # store as list.
+    key_list = list(ranges_dict.keys())
+
+    for key in key_list:
+        for para in new_ranges:
+            # Check if key is in list of ranges to be adjusted.
+            if para[0] == key:
+                if percent is True:
+                    new_limit = (ranges_dict[key][1] - ranges_dict[key][
+                        0]) * abs(para[1])
+                else:
+                    new_limit = abs(para[1])
+
+                # If new value is negative, assume range extention
+                # at lower end; else extent the upper end.
+                if para[1] < 0:
+                    new_min = ranges_dict[key][0] - new_limit
+                    new_max = ranges_dict[key][1]
+                    print(key, "<0: ", ranges_dict[key][0], new_min)
+                else:
+                    new_min = ranges_dict[key][0]
+                    new_max = ranges_dict[key][1] + new_limit
+                    print(key, ">=0: ", ranges_dict[key][1], new_max)
+
+                # Stop loop if a match is found.
+                break
+
+            # If keys do not match, simply copy the existing ones.
+            else:
+                new_min = ranges_dict[key][0]
+                new_max = ranges_dict[key][1]
+
+        print("* ", key)
+        print(ranges_dict[key][0], ranges_dict[key][1])
+        print(new_min, new_max)
+        print("------")
+
+        # Extent the existing min/max list of the range with
+        # the new limit values.
+        if len(ranges_dict[key]) == 2:
+            ranges_dict[key].append(new_min)
+            ranges_dict[key].append(new_max)
+        else:
+            ranges_dict[key][2] = new_min
+            ranges_dict[key][3] = new_max
