@@ -10,6 +10,7 @@ import numpy as np
 # import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
+import multiprocessing as mp
 
 
 # Print versions of used packages.
@@ -151,7 +152,7 @@ def adjust_range(ranges_dict, new_ranges, percent=True):
     :param percent: If `True`, values in `new_ranges` need to be between 0
         and 1. If `False`, values are taken as provided.
     :return: Nothing - the dictionary is adjusted in place (list append).
-    
+
     """
     # Extract all the keys of the dictionary and
     # store as list.
@@ -199,3 +200,26 @@ def adjust_range(ranges_dict, new_ranges, percent=True):
         else:
             ranges_dict[key][2] = new_min
             ranges_dict[key][3] = new_max
+
+
+def run_job2(file_path):
+    """
+    Provided with a path to a simulation input file, a sub-process
+    is created and the simulation conducted.
+
+    :param file_path: path to the simulation input file
+        to be executed
+    """
+    cwd = os.getcwd()
+    print(os.path.split(file_path))
+    wd, fn = os.path.split(file_path)
+    os.chdir(wd)
+    subprocess.call("export set OMP_NUM_THREADS=1; \
+                    fds {}".format(fn),
+                    shell=True)
+    os.chdir(cwd)
+
+
+# if __name__ == "__main__":
+#     pool = mp.Pool(processes=2)
+#     pool.map(run_job2, input_files[:6])
