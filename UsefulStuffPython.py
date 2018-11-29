@@ -21,7 +21,7 @@ print('Numpy version: {}'.format(np.__version__))
 print('Matplotlib version: {}'.format(matplotlib.__version__))
 
 
-def plot_exp_mod_sim(data_set, title, x_label, y_label,
+def plot_exp_mod_sim(title, x_label, y_label, data_set=None,
                      data_x_label=None, data_y_label=None,
                      exp_df=None, model_dfs=None,
                      exp_x_label=None, exp_y_label=None,
@@ -75,16 +75,17 @@ def plot_exp_mod_sim(data_set, title, x_label, y_label,
                      model_df[[mod_y_label]] * mod_y_fac,
                      color=mod_color[i])
 
-    # Scale color cycle by number of data sets to plot.
-    num_plots = len(data_set)
-    plt.gca().set_prop_cycle(plt.cycler('color',
-                                        plt.cm.viridis(np.linspace(0, 1,
-                                                                   num_plots))))
+    if data_set is not None:
+        # Scale color cycle by number of data sets to plot.
+        num_plots = len(data_set)
+        plt.gca().set_prop_cycle(plt.cycler('color',
+                                            plt.cm.viridis(np.linspace(0, 1,
+                                                                       num_plots))))
 
-    # Plot data sets, following the coloring definition above.
-    for data_series in data_set:
-        plt.plot(data_series[[data_x_label]],
-                 data_series[[data_y_label]] * data_y_fac)
+        # Plot data sets, following the coloring definition above.
+        for data_series in data_set:
+            plt.plot(data_series[[data_x_label]],
+                     data_series[[data_y_label]] * data_y_fac)
 
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
