@@ -28,7 +28,7 @@ def plot_exp_mod_sim(title, x_label, y_label, data_set=None,
                      mod_x_label=None, mod_y_label=None,
                      x_min=0, x_max=600, y_min=0, y_max=700,
                      exp_y_fac=1, mod_y_fac=1, data_y_fac=1,
-                     plot_file_name=None, fig_x=9, fig_y=8,
+                     plot_file_name=None, fig_x=9, fig_y=8, dpi=320,
                      exp_color=['b'], mod_color=['k', 'r', 'g']):
     """
 
@@ -54,6 +54,7 @@ def plot_exp_mod_sim(title, x_label, y_label, data_set=None,
     :param plot_file_name:
     :param fig_x:
     :param fig_y:
+    :param dpi:
     :param exp_color:
     :param mod_color:
     :return:
@@ -97,7 +98,7 @@ def plot_exp_mod_sim(title, x_label, y_label, data_set=None,
     plt.grid()
 
     if plot_file_name is not None:
-        plt.savefig(plot_file_name + '.png')
+        plt.savefig(plot_file_name + '.png', dpi=dpi)
 
 
 def normaliser(x, xmin, xmax):
