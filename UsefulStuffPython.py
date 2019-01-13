@@ -5,6 +5,9 @@ import sys
 # Build gif from single images with ffmpeg.
 # ffmpeg -i filename_%04d.png output.gif
 
+# Extract frames from video file.
+# ffmpeg -i video.file frame%04d.png
+
 import pandas as pd
 import numpy as np
 # import seaborn as sns
