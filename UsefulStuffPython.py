@@ -11,8 +11,8 @@ import sys
 # Create color palette for GIF.
 # ffmpeg -i input.ext -vf palettegen palette.png
 
-# Create GIF with using a color palette.
-# ffmpeg -i input.ext -i palette.png -lavfi paletteuse output.gif
+# Create GIF with using a color palette and set desired frame rate.
+# ffmpeg -i input.ext -framerate 30 -i palette.png -lavfi paletteuse output.gif
 
 import pandas as pd
 import numpy as np
