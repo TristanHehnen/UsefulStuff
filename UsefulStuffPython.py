@@ -8,6 +8,12 @@ import sys
 # Extract frames from video file.
 # ffmpeg -i video.file frame%04d.png
 
+# Create color palette for GIF.
+# ffmpeg -i input.ext -vf palettegen palette.png
+
+# Create GIF with using a color palette.
+# ffmpeg -i input.ext -i palette.png -lavfi paletteuse output.gif
+
 import pandas as pd
 import numpy as np
 # import seaborn as sns
