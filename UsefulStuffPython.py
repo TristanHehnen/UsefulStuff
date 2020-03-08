@@ -16,7 +16,7 @@ import sys
 
 # Create GIF and control frame rate.
 # ffmpeg -r 1/10 -i filename_%04d.png -i palette.png -lavfi paletteuse -r 30 output.gif
-# -r 1/10:  Display each image for 10 seconds
+# -r 1/10:  Display each image for 10 seconds, floats possible like 1/0.5
 # -r 30:    framerate of output video
 
 import pandas as pd
