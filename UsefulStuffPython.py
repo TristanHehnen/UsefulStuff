@@ -9,10 +9,15 @@ import sys
 # ffmpeg -i video.file frame%04d.png
 
 # Create color palette for GIF.
-# ffmpeg -i input.ext -vf palettegen palette.png
+# ffmpeg -i filename_%04d.png -vf palettegen palette.png
 
-# Create GIF with using a color palette and set desired frame rate.
-# ffmpeg -i input.ext -framerate 30 -i palette.png -lavfi paletteuse output.gif
+# Create GIF with using a color palette.
+# ffmpeg -i filename_%04d.png -i palette.png -lavfi paletteuse output.gif
+
+# Create GIF and control frame rate.
+# ffmpeg -r 1/10 -i filename_%04d.png -i palette.png -lavfi paletteuse -r 30 output.gif
+# -r 1/10:  Display each image for 10 seconds, floats possible like 1/0.5
+# -r 30:    framerate of output video
 
 import pandas as pd
 import numpy as np
